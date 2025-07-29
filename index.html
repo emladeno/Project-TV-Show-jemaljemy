@@ -10,8 +10,20 @@
 
   <body>
     <div id="root">
-    </div>
+      <template id="episodes-template">
 
+        <div class="episode-card">
+            <div class="episode-card-header">
+              <h2 class="episode-title"></h2>
+            </div>
+
+            <div class="episode-card-body">
+                <img class="episode-image" src="" alt="Episode thumbnail">
+                <div class="episode-summary"></div>
+            </div>    
+        </div>
+      </template>
+    </div>
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
 
