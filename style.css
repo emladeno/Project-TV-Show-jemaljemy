@@ -1,12 +1,13 @@
 #root {
     color: rgb(19, 16, 16);
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(5,1fr);
     gap: 20px;
     padding: 20px;
-    max-width: 1200px;
+    max-width: 1600px;
     width: 100%;
     padding-top: 130px;
+    margin: 0 auto;
 }
 
 body {
@@ -92,11 +93,12 @@ body {
 #search-input{
   background-color: #EBEEC9;
   margin-right: 100px;
-  width: auto;
+  width: 250px;
   padding: 10px 5px;
 }
 
 #select-movie {
+  background-color: #a88686;
   padding: 0.5rem 1rem;
   font-size: 1rem;
   border: 2px solid #ccc;

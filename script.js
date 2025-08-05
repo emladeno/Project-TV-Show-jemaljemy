@@ -1,10 +1,14 @@
 //You can edit ALL of the code here
-function setup() {
-  const allEpisodes = getAllEpisodes();
+const state = {};
+const allEpisodes = "https://api.tvmaze.com/shows/82/episodes";
 
-  makePageForEpisodes(allEpisodes);
-}
-
+const fetchEpisodes = async () => {
+  const response = await fetch(allEpisodes);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return await response.json();
+};
 
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
@@ -138,8 +142,22 @@ function makePageForEpisodes(episodeList) {
   });
 }
 
-
-
-  
+const setup = async () => {
+  const rootElem = document.getElementById('root');
+  rootElem.innerHTML = '<h1> Loading Episodes in course...</h1>';
+  try {
+    const arrayEpisodes = await fetchEpisodes() 
+    state.arrayEpisodes = arrayEpisodes; 
+    makePageForEpisodes(arrayEpisodes);
+  } catch (error) {
+    console.error('An error occurred while fetching data:', error);
+          rootElem.innerHTML = `
+      <div style="text-align: center; color: red;">
+        <h1>Oops! Something went wrong.</h1>
+        <p>Could not load the episode data. Please try again later.</p>
+      </div>
+    `;
+  }
+}
 
 window.onload = setup;
