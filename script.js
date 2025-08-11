@@ -56,6 +56,63 @@ const populateShowDropdown = (shows) => {
   });
 };
 
+// Create a new function that can display and iterate shows.
+
+function makePageForShows (shows) {
+  const rootElem = document.getElementById("root");
+  rootElem.innerHTML = '';
+
+  const showsContainer = document.createElement("section");
+  showsContainer.className = "shows-container";
+  
+  shows.forEach((show) => {
+    // 1. Create a container for the show card
+    const showCard = document.createElement("div");
+    showCard.className = "show-card";
+
+    // 2. Create and set the show name
+    const showName = document.createElement("h1");
+    showName.className = "show-name";
+    showName.textContent = show.name;
+    showCard.append(showName);
+    
+    // 3. Create and set the image
+    const imgShow = document.createElement("img");
+    imgShow.className = "show-image";
+    // Check if the image property exists before setting the source
+    imgShow.src = show.image?.medium ? show.image.medium : "./path/to/placeholder.png";
+    imgShow.alt = `image for ${show.name}`;
+    showCard.append(imgShow);
+
+    // 4. Create and set the summary
+    const summaryShow = document.createElement("p");
+    summaryShow.className = "show-summary";
+    summaryShow.innerHTML = show.summary; 
+    showCard.append(summaryShow)
+
+    // 5. Create and set other details
+    const detailsList = document.createElement("ul");
+    detailsList.className = "show-details";
+    detailsList.innerHTML = `
+      <li>**Genres:** ${show.genres.join(", ")}</li>
+      <li>**Status:** ${show.status}</li>
+      <li>**Rating:** ${show.rating.average}</li>
+      <li>**Runtime:** ${show.runtime} mins</li>
+    `;
+    showCard.append(detailsList)
+
+    // add addEventListener when show card is clicked it fetch episodes.
+    showName.addEventListener('click' ,async()=> {
+        const episodes = await fetchEpisodes(show.id);
+        makePageForEpisodes(episodes)        
+    })
+
+    showsContainer.append(showCard)
+  })
+
+rootElem.append(showsContainer)
+}
+
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
   const templateMovie = document.getElementById("episodes-template");
