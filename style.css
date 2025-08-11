@@ -6,7 +6,7 @@
     padding: 20px;
     max-width: 1600px;
     width: 100%;
-    padding-top: 130px;
+    padding-top: 140px;
     margin: 0 auto;
 }
 
@@ -30,6 +30,7 @@ body {
 }
 
 .episode-card .episode-card-header {
+  background-color: azure;
     border: 2px solid black;
     padding: 10px 15px;
     width: 100%;
@@ -78,13 +79,14 @@ body {
 
 .search-container {
   width: 100%;
+  height: 12%;
   color: #7E1919;
   position: fixed;
   top: 5px;
   left: 5px;
   padding: 10px;
   z-index: 100;
-  background-color: rgb(204, 147, 147);
+  background-color: rgba(169, 235, 191, 0.747);
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   display: flex; /* Use flexbox to arrange items */
@@ -101,7 +103,7 @@ body {
 }
 
 #select-movie {
-  background-color: #a88686;
+  background-color: #79ebc5a2;
   padding: 0.5rem 1rem;
   font-size: 1rem;
   border: 2px solid #ccc;
@@ -116,7 +118,7 @@ body {
 
 }
 #select-show {
-    background-color: #a88686;
+    background-color:  #79ebc5a2;
     padding: 0.5rem 1rem;
     font-size: 1rem;
     border: 2px solid #ccc;
