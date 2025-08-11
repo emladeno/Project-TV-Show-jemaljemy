@@ -63,14 +63,6 @@ function makePageForEpisodes(episodeList) {
   // Clear the root element to prepare for new content
   rootElem.innerHTML = "";
 
-  // Create the main container for all controls
-  const divDropDown = document.createElement("div");
-  divDropDown.className = "search-container";
-
-  // Create and append the Show Selector (Requirement 1)
-  const selectShow = document.createElement("select");
-  selectShow.id = "select-show";
-
   // Add event listener for show change (Requirement 3)
   selectShow.addEventListener("change", async (event) => {
     const showId = event.target.value;
@@ -87,31 +79,6 @@ function makePageForEpisodes(episodeList) {
       }
     }
   });
-
-  // Create search input and episode selector as before
-  const searchInput = document.createElement("input");
-  searchInput.type = "text";
-  searchInput.id = "search-input";
-  searchInput.placeholder = "Search Episodes..";
-
-  const label = document.createElement("label");
-  label.textContent = "Select An Episode ";
-  label.setAttribute("for", "select-movie");
-
-  const selectMovie = document.createElement("select");
-  selectMovie.id = "select-movie";
-  const defOption = document.createElement("option");
-  defOption.value = "";
-  defOption.textContent = "--Show All Episodes--";
-  selectMovie.append(defOption);
-
-  const paragraphD = document.createElement("p");
-  paragraphD.id = "selectedMovie";
-  paragraphD.textContent = `Displaying ${episodeList.length}/${episodeList.length} episodes`;
-
-  // Append all UI controls to the divDropDown container
-  divDropDown.append(selectShow, searchInput, label, selectMovie, paragraphD);
-  rootElem.append(divDropDown);
 
   // Generate episode cards and populate the episode dropdown
   episodeList.forEach((episode) => {
@@ -166,8 +133,8 @@ function makePageForEpisodes(episodeList) {
         card.style.display = "none";
       }
     });
-
-    paragraphD.textContent = `Displaying ${displayedCount}/${episodeList.length} episodes`;
+    const paragraphD = document.getElementById("selectedMovie");
+    paragraphD.textContent = `Displaying ${count}/${episodeList.length} episodes`;
   });
 
   // Search input filtering (Requirement 4)
@@ -194,24 +161,50 @@ function makePageForEpisodes(episodeList) {
         episodeDiv.style.display = "none";
       }
     });
+    const paragraphD = document.getElementById("selectedMovie");
     paragraphD.textContent = `Displaying ${count}/${episodeList.length} episodes`;
   });
 }
 
 const setup = async () => {
   const rootElem = document.getElementById("root");
-  rootElem.innerHTML = "<h1>Loading shows and episodes...</h1>";
+  rootElem.innerHTML = "<h1>Loading shows...</h1>";
+  const divContainer = document.createElement('div')
+  rootElem.append(divContainer)
+
+  const searchInput = document.createElement('input')
+  searchInput.type = 'text';
+  searchInput.id = 'search-input';
+  searchInput.placeholder = 'Search..'
+  divContainer.append(searchInput)
+
+  const selectShow = document.createElement('select');
+  selectShow.id = 'select-show';
+  divContainer.append(selectShow)
+
+  const label = document.createElement("label");
+  label.textContent = "Select An Episode ";
+  label.setAttribute("for", "select-movie");
+  divContainer.append(label)
+
+  const selectMovie = document.createElement("select");
+  selectMovie.id = "select-movie";
+  divContainer.append(selectMovie)
+
+  const defOption = document.createElement("option");
+  defOption.value = "";
+  defOption.textContent = "--Show All Episodes--";
+  selectMovie.append(defOption);
+
+  const paragraphD = document.createElement("p");
+  paragraphD.id = "selectedMovie";
+  paragraphD.textContent = 'Displaying 0/0 episodes';
+  divContainer.append(paragraphD)
 
   try {
     // Fetch and populate all shows (Requirement 2)
     const allShows = await fetchShows();
     // Create the initial page structure with a default show
-    const defaultShowId = 82; // Breaking Bad
-    const arrayEpisodes = await fetchEpisodes(defaultShowId);
-    makePageForEpisodes(arrayEpisodes);
-
-    // Populate the show dropdown after the page is rendered
-    populateShowDropdown(allShows);
     // Set the default show in the dropdown
     document.getElementById("select-show").value = defaultShowId;
   } catch (error) {
