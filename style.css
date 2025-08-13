@@ -1,127 +1,166 @@
+/* Body and Root Styling */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    background-color: rgb(219, 203, 182);
+    box-sizing: border-box;
+}
+
 #root {
-    color: rgb(19, 16, 16);
-    display: grid;
-    grid-template-columns: repeat(5,1fr);
-    gap: 20px;
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     max-width: 1600px;
-    width: 100%;
-    padding-top: 140px;
     margin: 0 auto;
 }
 
-body {
-    font-family: 'Inter';
-    margin: 0;
-    background-color: rgb(219, 203, 182);
+/* Header and Navigation */
+#controls-container {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: rgba(169, 235, 191, 0.747);
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    flex-wrap: wrap; /* Allows controls to wrap on smaller screens */
 }
 
-.episode-card {
+#search-input {
+    background-color: #EBEEC9;
+    width: 250px;
+    padding: 10px 5px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+}
+
+#select-show, #select-movie {
+    background-color: #79ebc5a2;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    min-width: 250px;
+}
+
+#selectedMovie {
+    font-size: 1rem;
+    font-style: italic;
+    color: #333;
+}
+
+#back-to-shows-btn {
+    background-color: #79ebc5a2;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Main Content Containers */
+#main-content {
+    width: 100%;
+    padding-top: 100px;
+}
+
+/* This is the key section for the fix. We will use a more specific selector
+   and media queries to set the number of columns explicitly. */
+#main-content .shows-container, #main-content #episodes-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Default to 4 columns for large screens */
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Media query for medium screens (e.g., tablets) */
+@media (max-width: 1200px) {
+    #main-content .shows-container, #main-content #episodes-container {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    }
+}
+
+/* Media query for smaller screens (e.g., small tablets) */
+@media (max-width: 900px) {
+    #main-content .shows-container, #main-content #episodes-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    }
+}
+
+/* Media query for very small screens (e.g., phones) */
+@media (max-width: 600px) {
+    #main-content .shows-container, #main-content #episodes-container {
+        grid-template-columns: 1fr; /* 1 column */
+    }
+}
+
+/* Card Styling (for both shows and episodes) */
+.show-card, .episode-card {
     background-color: white;
     font-family: 'Courier New', Courier, monospace;
     border-radius: 10px;
-    box-shadow:  0 4px 10px rgb(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgb(0,0,0,0.1);
     overflow: hidden;
-    padding: 0;
+    padding: 20px;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: stretch;
 }
 
-.episode-card .episode-card-header {
-  background-color: azure;
-    border: 2px solid black;
-    padding: 10px 15px;
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 12px 12px 12px 12px;
-    margin-bottom: 10px;
-}
-
-.episode-card-header.episode-title {
+/* Show Card Specifics */
+.show-card h1 {
     font-size: 1.5em;
-    margin: 0;
-    padding: 0;
+    margin: 0 0 10px 0;
+    cursor: pointer;
 }
 
-.episode-card-body {
-    padding: 20px;
-    flex-grow: 1;
+.show-card .show-image {
     width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.episode-card-body .episode-image {
-    max-width: 100%;
     height: auto;
     border-radius: 8px;
     margin-bottom: 15px;
-
 }
 
-.episode-card-body .episode-summary {
+.show-card .show-summary {
     font-size: 0.90em;
     text-align: left;
     line-height: 1.5;
     flex-grow: 1;
 }
 
-.page-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+.show-card .show-details {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0 0 0;
+    text-align: left;
+    font-size: 0.9em;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
 }
 
-.search-container {
-  width: 100%;
-  height: 12%;
-  color: #7E1919;
-  position: fixed;
-  top: 5px;
-  left: 5px;
-  padding: 10px;
-  z-index: 100;
-  background-color: rgba(169, 235, 191, 0.747);
-  border-right: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  display: flex; /* Use flexbox to arrange items */
-  gap: 15px; /* Add some space between the controls */
-  align-items: center;
+/* Episode Card Specifics */
+.episode-card h2 {
+    font-size: 1.2em;
+    margin: 0 0 10px 0;
 }
 
-
-#search-input{
-  background-color: #EBEEC9;
-  margin-right: 100px;
-  width: 250px;
-  padding: 10px 5px;
-}
-
-#select-movie {
-  background-color: #79ebc5a2;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  min-width: 250px;
-}
-
-#selectedMovie {
-  font-size: 1rem;
-  font-style: italic;
-  color: #333;
-
-}
-#select-show {
-    background-color:  #79ebc5a2;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    border: 2px solid #ccc;
+.episode-card .episode-image {
+    width: 100%;
+    height: auto;
     border-radius: 8px;
-    min-width: 250px;
+    margin-bottom: 15px;
+}
+
+.episode-card .episode-summary {
+    font-size: 0.90em;
+    text-align: left;
+    line-height: 1.5;
+    flex-grow: 1;
 }
