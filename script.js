@@ -260,11 +260,22 @@ const setup = async () => {
                 );
                 makePageForShows(filteredShows);
             } else {
-                const filteredEpisodes = state.allEpisodes.filter(episode => 
-                    episode.name.toLowerCase().includes(searchTerm) ||
-                    episode.summary?.toLowerCase().includes(searchTerm)
-                );
-                makePageForEpisodes(filteredEpisodes);
+                let displayedCount = 0;
+                const allEpisodeCards = episodesContainer.querySelectorAll(".episode-card");
+                const totalCount = state.allEpisodes.length;
+
+                allEpisodeCards.forEach(card => {
+                    const episodeCode = card.getAttribute("data-episode-code");
+                    const episode = state.allEpisodes.find(ep => `S${String(ep.season).padStart(2, "0")}E${String(ep.number).padStart(2, "0")}` === episodeCode);
+            
+                    if (episode && (episode.name.toLowerCase().includes(searchTerm) || episode.summary?.toLowerCase().includes(searchTerm))) {
+                        card.style.display = "block";
+                        displayedCount++;
+                    } else {
+                        card.style.display = "none";
+                }
+            });
+             updateEpisodeCount(displayedCount, totalCount);
             }
         });
 
